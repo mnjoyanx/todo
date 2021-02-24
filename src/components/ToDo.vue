@@ -37,27 +37,34 @@
 
     <div v-if="items.length">
       <table class="table mt-5">
-  <thead>
-    <tr>
-      <th scope="col">Name</th>
-      <th scope="col">Description</th>
-      <th scope="col">Workload</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr v-for="item in items" :key="item.id">
-      <th scope="row">{{ item.name }}</th>
-      <td>{{ item.description }}</td>
-      <td>{{ item.workload }}</td>
-      <th scope="col" class="btn btn-danger btn-sm" @click="removeItem(item.id)">remove</th>
-
-    </tr>
-  </tbody>
-</table>
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Workload</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in items" :key="item.id">
+            <th scope="row">{{ item.name }}</th>
+            <td>
+              <p :class="{'ellipsis': isVisible }" @click="showDescription(item)">{{ item.description }}</p>
+            </td>
+            <td>{{ item.workload }}</td>
+            <th
+              scope="col"
+              class="btn btn-danger btn-sm"
+              @click="removeItem(item.id)"
+            >
+              remove
+            </th>
+          </tr>
+        </tbody>
+      </table>
     </div>
     <div v-else>
-        <h3>You have not any items yet.</h3>
+      <h3>You have not any items yet.</h3>
     </div>
   </div>
 </template>
@@ -74,12 +81,12 @@ export default {
         workload: "",
       },
       items: [],
+      isVisible: true
     };
   },
   methods: {
     addToDo() {
       const { name, description, workload } = this.toDoItems;
-
 
       if (name && description && workload !== "") {
         const newToDo = {
@@ -89,20 +96,30 @@ export default {
           workload: workload,
         };
         this.items.push(newToDo);
-        this.toDoItems.name = ''
-        this.toDoItems.description  = ''
-        this.toDoItems.workload = ''
+        this.toDoItems.name = "";
+        this.toDoItems.description = "";
+        this.toDoItems.workload = "";
       } else {
         alert("Fill in all fields please");
       }
     },
 
     removeItem(item) {
-        console.log(this.items);
-      return this.items.splice(0, item)
+      console.log(this.items);
+      return this.items.splice(0, item);
     },
+    showDescription(item) {
+       alert(item.description)
+    }
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style>
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 200px;
+}
+</style>
