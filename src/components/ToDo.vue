@@ -49,7 +49,12 @@
           <tr v-for="item in items" :key="item.id">
             <th scope="row">{{ item.name }}</th>
             <td>
-              <p :class="{'ellipsis': isVisible }" @click="showDescription(item)">{{ item.description }}</p>
+              <p
+                :class="{ ellipsis: isVisible }"
+                @click="showDescription(item)"
+              >
+                {{ item.description }}
+              </p>
             </td>
             <td>{{ item.workload }}</td>
             <th
@@ -81,7 +86,7 @@ export default {
         workload: "",
       },
       items: [],
-      isVisible: true
+      isVisible: true,
     };
   },
   methods: {
@@ -104,13 +109,12 @@ export default {
       }
     },
 
-    removeItem(item) {
-      console.log(this.items);
-      return this.items.splice(0, item);
+    removeItem(id) {
+      this.items = this.items.filter((i) => i.id !== id);
     },
     showDescription(item) {
-       alert(item.description)
-    }
+      alert(item.description);
+    },
   },
 };
 </script>
